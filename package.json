@@ -4,7 +4,7 @@
   "description": "---",
   "main": "index.js",
   "scripts": {
-    "test": "mocha tests/**/*.js --exit --recursive --timeout 60000 --file ./test/test-setup.js",
+    "test": "mocha tests/**/*.js --exit --recursive --timeout 60000 --file ./tests/test-setup.js",
     "pretest": "node utils/create-database.js test",
     "posttest": "node utils/drop-database.js",
     "prestart": "node utils/create-database.js",
