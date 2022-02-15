@@ -1,5 +1,6 @@
-#Environmental variable file
+# Environmental variable file
 .env
+.env.test
 # Logs
 logs
 *.log
