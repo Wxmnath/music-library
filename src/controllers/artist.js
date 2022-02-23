@@ -20,3 +20,16 @@ exports.create = async (req, res) => {
 
   db.close();
 };
+
+exports.read = async (_, res) => {
+  const db = await getDb();
+
+  try {
+    const [artists] = await db.query("SELECT * FROM Artist");
+
+    res.status(200).json(artists);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+  db.close();
+};
