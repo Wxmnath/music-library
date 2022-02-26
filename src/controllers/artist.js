@@ -1,4 +1,3 @@
-const res = require("express/lib/response");
 const getDb = require("../services/db");
 
 exports.create = async (req, res) => {
@@ -35,19 +34,43 @@ exports.read = async (_, res) => {
   db.close();
 };
 
-//
 exports.readById = async (req, res) => {
   const db = await getDb();
   const { artistId } = req.params;
+
   //To pass this test artist has been removed from the array(destructure) before sending the data to the repsonse.
   const [[artist]] = await db.query("SELECT * FROM Artist WHERE id = ?", [
-    artistId, //Controller uses db.query() to SELECT everything from the artist table WHERE the id matches req.params.artistId.
+    artistId,
   ]);
+  //Controller uses db.query() to SELECT everything from the artist table WHERE the id matches req.params.artistId.
 
   if (!artist) {
     res.status(404);
   } else {
     res.status(200).json(artist);
+  }
+  db.close();
+};
+
+exports.update = async (req, res) => {
+  const db = await getDb();
+  const data = req.body;
+  const { artistId } = req.params;
+
+  try {
+    const [{ affectedRows }] = await db.query(
+      "UPDATE Artist SET ? WHERE id = ?",
+      [data, artistId]
+    );
+
+    if (!affectedRows) {
+      res.sendStatus(404);
+    } else {
+      res.status(200).send();
+    }
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
   }
   db.close();
 };

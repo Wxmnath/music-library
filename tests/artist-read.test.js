@@ -53,24 +53,24 @@ describe("read artist", () => {
       });
     });
   });
-});
 
-// artist-read.test.js
-describe("/artist/:artistId", () => {
-  describe("GET", () => {
-    it("returns a single artist with the correct id", async () => {
-      const expected = artists[0]; //This first test is looking to see if the returned artist details match artist 0 from the artist array.
-      const res = await request(app).get(`/artist/${expected.id}`).send();
+  // artist-read.test.js
+  describe("/artist/:artistId", () => {
+    describe("GET", () => {
+      it("returns a single artist with the correct id", async () => {
+        const expected = artists[0]; //This first test is looking to see if the returned artist details match artist 0 from the artist array.
+        const res = await request(app).get(`/artist/${expected.id}`).send();
 
-      expect(res.status).to.equal(200);
-      expect(res.body).to.deep.equal(expected);
-    });
+        expect(res.status).to.equal(200);
+        expect(res.body).to.deep.equal(expected);
+      });
 
-    it("returns a 404 if the artist is not in the database", async () => {
-      //This second test is asking for an artist that doesnt exist and expects to get a 404 back.
-      const res = await request(app).get("/artist/999999").send();
+      it("returns a 404 if the artist is not in the database", async () => {
+        //This second test is asking for an artist that doesnt exist and expects to get a 404 back.
+        const res = await request(app).get("/artist/999999").send();
 
-      expect(res.status).to.equal(404);
+        expect(res.status).to.equal(404);
+      });
     });
   });
 });
