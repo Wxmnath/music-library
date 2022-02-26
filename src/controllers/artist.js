@@ -73,3 +73,27 @@ exports.update = async (req, res) => {
   }
   db.close();
 };
+
+exports.delete = async (req, res) => {
+  const db = await getDb();
+  const { artistId } = req.params;
+  // const [[artist]] = await db.query("DELETE FROM Artist WHERE id = ?", [
+  //   artistId,
+  // ]);
+
+  try {
+    const [{ affectedRows }] = await db.query(
+      "DELETE FROM Artist WHERE id = ?",
+      [artistId]
+    );
+
+    if (!affectedRows) {
+      res.sendStatus(404);
+    } else {
+      res.status(200).send();
+    }
+  } catch (err) {
+    res.sendStatus(500);
+  }
+  db.close();
+};
