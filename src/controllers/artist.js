@@ -45,7 +45,7 @@ exports.readById = async (req, res) => {
   //Controller uses db.query() to SELECT everything from the artist table WHERE the id matches req.params.artistId.
 
   if (!artist) {
-    res.status(404);
+    res.sendStatus(404);
   } else {
     res.status(200).json(artist);
   }
@@ -69,7 +69,6 @@ exports.update = async (req, res) => {
       res.status(200).send();
     }
   } catch (err) {
-    console.log(err);
     res.sendStatus(500);
   }
   db.close();
