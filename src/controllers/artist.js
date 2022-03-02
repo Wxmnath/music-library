@@ -6,9 +6,6 @@ exports.create = async (req, res) => {
 
   try {
     await db.query(`INSERT INTO Artist (name, genre) VALUES (?, ?)`, [
-      // We put a ? at any point where we want to add a variable to our
-      // statement. Then we provide those variables in an array as the second argument to db.query(). mysql2 then automatically escapes any
-      // strings that are being passed into the statement, thereby preventing any malicious SQL being executed by the database.
       name,
       genre,
     ]);
@@ -38,11 +35,9 @@ exports.readById = async (req, res) => {
   const db = await getDb();
   const { artistId } = req.params;
 
-  //To pass this test artist has been removed from the array(destructure) before sending the data to the repsonse.
   const [[artist]] = await db.query("SELECT * FROM Artist WHERE id = ?", [
     artistId,
   ]);
-  //Controller uses db.query() to SELECT everything from the artist table WHERE the id matches req.params.artistId.
 
   if (!artist) {
     res.sendStatus(404);
@@ -77,9 +72,6 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
   const db = await getDb();
   const { artistId } = req.params;
-  // const [[artist]] = await db.query("DELETE FROM Artist WHERE id = ?", [
-  //   artistId,
-  // ]);
 
   try {
     const [{ affectedRows }] = await db.query(
